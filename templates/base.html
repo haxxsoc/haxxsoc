@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BizDash – Durban</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/
+bootstrap.min.css" rel="stylesheet">
+<link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div class="container-fluid">
+<a class="navbar-brand" href="{{ url_for('dashboard') }}">BizDash</a>
+<div class="collapse navbar-collapse">
+<ul class="navbar-nav me-auto">
+{% if current_user.is_authenticated %}
+<li class="nav-item"><a class="nav-link"
+href="{{ url_for('biz.list_businesses') }}">Businesses</a></li>
+<li class="nav-item"><a class="nav-link"
+href="{{ url_for('analytics.view_analytics') }}">Analytics</a></li>
+{% if current_user.is_admin %}
+<li class="nav-item"><a class="nav-link"
+href="{{ url_for('admin.users') }}">Users (Admin)</a></li>
+<li class="nav-item"><a class="nav-link"
+href="{{ url_for('admin.businesses_admin') }}">Manage Businesses</a></li>
+{% endif %}
+{% endif %}
+</ul>
+<ul class="navbar-nav">
+{% if current_user.is_authenticated %}
+<li class="nav-item"><a class="nav-link"
+href="{{ url_for('auth.logout') }}">Logout</a></li>
+{% endif %}
+</ul>
+</div>
+</div>
+</nav>
+<main class="container py-4">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, msg in messages %}
+  <div class="alert alert-{{ category }}">{{ msg }}</div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/
+  bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/
+  chart.umd.min.js"></script>
+  </body>
+</html>
