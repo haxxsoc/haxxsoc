@@ -1,0 +1,9 @@
+body { background: #0b0c0f; color: #e9ecef; }
+.navbar { border-bottom: 1px solid rgba(255,255,255,.08); }
+.card { background: #14161a; border: 1px solid rgba(255,255,255,.08); }
+.table { color: #e9ecef; }
+.table thead { color: #adb5bd; }
+.form-control, .form-check-input { background: #0f1114; border-color: #2b3036;
+color: #e9ecef; }
+.btn-primary { background: #3d7bfd; border-color: #3d7bfd; }
+.alert { border: none; }
