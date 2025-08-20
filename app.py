@@ -9,39 +9,40 @@ from auth import bp as auth_bp
 from admin import bp as admin_bp
 from business import bp as biz_bp
 from analytics import bp as analytics_bp
-def create_app():
-app = Flask(__name__)
-app.config.from_object(Config)
-# Init extensions
-db.init_app(app)
-login_manager.init_app(app)
-# Create tables and seed
-with app.app_context():
-db.create_all()
-seed_admin()
-# Register blueprints
-app.register_blueprint(auth_bp)
-app.register_blueprint(admin_bp)
-app.register_blueprint(biz_bp)
-app.register_blueprint(analytics_bp)
-# Routes
 
-@app.get("/")
-def index():
-  if current_user.is_authenticated:
-    return redirect(url_for("dashboard"))
-  return redirect(url_for("auth.login"))
-@app.get("/dashboard")
-@login_required
-def dashboard():
-  total_users = User.query.count()
-  total_businesses = Business.query.count()
-  durban_businesses = Business.query.filter_by(city="Durban").count()
-  return render_template(
-    "dashboard.html",
-    total_users=total_users,
-    total_businesses=total_businesses,
-    durban_businesses=durban_businesses,)
+def create_app():
+  app = Flask(__name__)
+  app.config.from_object(Config)
+  # Init extensions
+  db.init_app(app)
+  login_manager.init_app(app)
+  # Create tables and seed
+  with app.app_context():
+    db.create_all()
+    seed_admin()
+  # Register blueprints
+  app.register_blueprint(auth_bp)
+  app.register_blueprint(admin_bp)
+  app.register_blueprint(biz_bp)
+  app.register_blueprint(analytics_bp)
+  # Routes
+
+  @app.get("/")
+  def index():
+    if current_user.is_authenticated:
+      return redirect(url_for("dashboard"))
+    return redirect(url_for("auth.login"))
+  @app.get("/dashboard")
+  @login_required
+  def dashboard():
+    total_users = User.query.count()
+    total_businesses = Business.query.count()
+    durban_businesses = Business.query.filter_by(city="Durban").count()
+    return render_template(
+      "dashboard.html",
+      total_users=total_users,
+      total_businesses=total_businesses,
+      durban_businesses=durban_businesses,)
   return app
   
 def seed_admin():
@@ -85,6 +86,7 @@ def seed_admin():
     ),]
   db.session.add_all(samples)
   db.session.commit()
+
 if __name__ == "__main__":
   app = create_app()
   app.run(debug=True)
