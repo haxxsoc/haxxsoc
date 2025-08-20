@@ -1,2 +1,2 @@
 # haxxsoc
-Computer analysis and forensic
+Code analysis and site forensic
