@@ -3,8 +3,6 @@ from flask_login import login_required
 from sqlalchemy import func, extract
 from extensions import db
 from models import Business
-
-
 bp = Blueprint("analytics", __name__, url_prefix="/analytics")
 
 @bp.get("")
