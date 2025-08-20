@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="mb-4">Dashboard</h3>
+<div class="row g-3">
+<div class="col-md-4">
+<div class="card"><div class="card-body">
+<div class="h6 text-muted">Users</div>
+<div class="display-6">{{ total_users }}</div>
+</div></div>
+</div>
+<div class="col-md-4">
+<div class="card"><div class="card-body">
+<div class="h6 text-muted">Businesses (All)</div>
+<div class="display-6">{{ total_businesses }}</div>
+</div></div>
+</div>
+<div class="col-md-4">
+<div class="card"><div class="card-body">
+<div class="h6 text-muted">Businesses in Durban</div>
+<div class="display-6">{{ durban_businesses }}</div>
+</div></div>
+</div>
+</div>
+{% endblock %}
