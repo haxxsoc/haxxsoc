@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="mb-4">Analytics</h3>
+<div class="row g-3 mb-3">
+<div class="col-md-4"><div class="card"><div class="card-body">
+<div class="text-muted small">Total businesses</div>
+<div class="h3">{{ totals.total_businesses }}</div>
+</div></div></div>
+<div class="col-md-4"><div class="card"><div class="card-body">
+<div class="text-muted small">Total employees</div>
+<div class="h3">{{ totals.total_employees }}</div>
+</div></div></div>
+<div class="col-md-4"><div class="card"><div class="card-body">
+<div class="text-muted small">Total revenue (ZAR)</div>
+<div class="h3">R {{ '%.2f'|format(totals.total_revenue) }}</div>
+</div></div></div>
+</div>
+<div class="row g-4">
+<div class="col-md-6">
+<div class="card"><div class="card-body">
+<h6 class="card-title">Businesses by Category</h6>
+<canvas id="catChart" height="200"></canvas>
+</div></div>
+</div>
+<div class="col-md-6">
+<div class="card"><div class="card-body">
+<h6 class="card-title">Top Suburbs by Count</h6>
+<canvas id="suburbChart" height="200"></canvas>
+</div></div>
+</div>
+<div class="col-12">
+<div class="card"><div class="card-body">
+<h6 class="card-title">New Businesses per Month</h6>
+<canvas id="monthChart" height="120"></canvas>
+</div></div>
+</div>
+</div>
+<script>
+const catLabels = {{ cat_labels|tojson }};
+const catValues = {{ cat_values|tojson }};
+const subLabels = {{ sub_labels|tojson }};
+const subValues = {{ sub_values|tojson }};
+const monthLabels = {{ month_labels|tojson }};
+const monthValues = {{ month_values|tojson }};
+new Chart(document.getElementById('catChart'), { type: 'doughnut', data: {
+labels: catLabels, datasets: [{ data: catValues }] }, options: { responsive:
+true } });
+new Chart(document.getElementById('suburbChart'), { type: 'bar', data: {
+labels: subLabels, datasets: [{ data: subValues }] }, options: { responsive:
+true } });
+new Chart(document.getElementById('monthChart'), { type: 'line', data: {
+labels: monthLabels, datasets: [{ data: monthValues, tension: 0.2, fill:
+false }] }, options: { responsive: true } });
+</script>
+{% endblock %}
